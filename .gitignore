@@ -1,0 +1,16 @@
+# --- IntelliJ IDEA (Αγνοούμε ΟΛΕΣ τις ρυθμίσεις του IDE) ---
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# --- Scala & sbt (Αγνοούμε τα build artifacts) ---
+target/
+project/target/
+project/project/
+.bsp/
+
+# --- Γενικά ---
+.DS_Store
+hs_err_pid*
