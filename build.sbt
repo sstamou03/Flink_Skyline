@@ -13,6 +13,10 @@ libraryDependencies ++= Seq(
   "org.apache.flink" %  "flink-clients"        % flinkVersion,
   "org.apache.flink" %  "flink-runtime-web"    % flinkVersion,
   "org.apache.flink" %  "flink-connector-kafka"% flinkVersion
+
+
 )
+
+libraryDependencies += "org.apache.flink" % "flink-connector-kafka" % "3.0.1-1.17"
 
 Compile / run / fork := true

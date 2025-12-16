@@ -21,7 +21,7 @@ object GeneratorTest {
     val producer = new KafkaProducer[String, String](prop)
     val random = new Random()
 
-    (1 to 1000000).view.map{ _ =>   //view -> lazy, we avoid memory errors
+    (1 to 15000000).view.map{ _ =>   //view -> lazy, we avoid memory errors
 
       val x = random.nextDouble()*1000
       val y = random.nextDouble()*1000
