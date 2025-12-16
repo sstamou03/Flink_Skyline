@@ -1,16 +1,16 @@
-# --- IntelliJ IDEA (Αγνοούμε ΟΛΕΣ τις ρυθμίσεις του IDE) ---
+# IntelliJ specific files
 .idea/
 *.iml
-*.iws
-*.ipr
 out/
 
-# --- Scala & sbt (Αγνοούμε τα build artifacts) ---
+# SBT specific files
 target/
 project/target/
 project/project/
-.bsp/
 
-# --- Γενικά ---
+# Generated Artifacts (Fat Jars)
+*.jar
+*.log
+
+# Mac specific (αν έχεις Mac εσύ ή ο φίλος σου)
 .DS_Store
-hs_err_pid*
