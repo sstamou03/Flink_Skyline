@@ -21,12 +21,27 @@ object GeneratorTest {
     val producer = new KafkaProducer[String, String](prop)
     val random = new Random()
 
-    (1 to 15000000).view.map{ _ =>   //view -> lazy, we avoid memory errors
+   // val distro = "uniform"
+   // val distro = "anticorrelated"
+    val distro = "correlated"
 
-      val x = random.nextDouble()*1000
-      val y = random.nextDouble()*1000
+    println(distro)
 
-      (x,y)
+    (1 to 15000000).view.map{ _ => //view -> lazy, we avoid memory errors
+
+      distro match {
+        case "correlated" => val x = random.nextDouble() * 1000
+          val y = x + (random.nextGaussian() * 50)
+          (x, y)
+
+        case "anticorrelated" => val x = random.nextDouble() * 1000
+          val y =  (1000 - x) + (random.nextGaussian() * 50)
+          (x,y)
+
+        case _ => val x = random.nextDouble()*1000
+          val y = random.nextDouble()*1000
+          (x,y)
+      }
 
     }.foreach{case (x,y) =>
 
