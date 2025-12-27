@@ -82,11 +82,9 @@ object Job {
 
       case "dim" => points.keyBy(point => Algorithms.MRDim(point,parallelism,Vmax))
 
-      //TODO
-      //case 2os
+      case "grid" => points.keyBy(point => Algorithms.MRGrid(point, parallelism, Vmax))
 
-      //TODO
-      //case 3os
+      case "angle" => points.keyBy(p => Algorithms.MRAngle(p, parallelism))
     }
 
     val local = partition.process(new Operators.Operator1).name("local")

@@ -1,7 +1,6 @@
 package ECE613
 
 
-//======================================================MR-GRID==========================================================================
 // Data Point
 case class Point(id: String, values: List[Double])
 
@@ -39,6 +38,8 @@ object Dominance {
 
 object Algorithms {
 
+  //====================================================== MR - DIM ==========================================================================
+
   def MRDim(point: Point, partionNum: Int, Vmax: Double) = {
 
     val partvalue = point.values.head // separate according to the first value
@@ -52,6 +53,65 @@ object Algorithms {
 
     }
   }
+
+  //============================================================= MR - GRID =======================================================
+
+  def MRGrid(point: Point, partitionNum: Int, Vmax: Double) = {
+
+    // if something is wrong, just send everything to partition 0
+    if (point.values.length < 2 || partitionNum <= 0 || Vmax <= 0.0) {
+      0
+    } else {
+
+      // extract the two dimensions x,y from the point
+      val x = point.values.head
+      val y = point.values.tail.head
+
+      // #cells per dimension. for P partitions, sqrt(P) cells for x, sqrt(P) cells for y
+      val cellsPerDim = math.max(1, math.sqrt(partitionNum.toDouble).toInt)
+      val cellSize = Vmax / cellsPerDim
+
+      // raw cell indices
+      val ixRaw = (x / cellSize).toInt
+      val iyRaw = (y / cellSize).toInt
+
+      // values EXACTLY at Vmax end up in the last cell
+      val ix = if (ixRaw >= cellsPerDim) cellsPerDim - 1 else ixRaw
+      val iy = if (iyRaw >= cellsPerDim) cellsPerDim - 1 else iyRaw
+
+      // Linearize (ix, iy) into a single partition id
+      ix * cellsPerDim + iy
+    }
+  }
+
+  //============================================================= MR - ANGLE =======================================================
+
+  def MRAngle(point: Point, partitionNum: Int) = {
+
+    if (point.values.length < 2 || partitionNum <= 0) {
+      0
+    } else {
+
+      val x = point.values.head
+      val y = point.values.tail.head
+
+      // angle in (-π, π]
+      val theta = math.atan2(y, x)
+
+      // normalize to [0, 2π)
+      val twoPi = 2.0 * math.Pi
+      val thetaNorm = if (theta < 0) theta + twoPi else theta
+
+      // map angle to sector id
+      val sectorWidth = twoPi / partitionNum.toDouble
+      val id = (thetaNorm / sectorWidth).toInt
+
+      // clamp (safety for theta == 2π due to floating point)
+      if (id >= partitionNum) partitionNum - 1 else id
+    }
+  }
+
 }
 
-//=======================================================================================================================================
+
+
