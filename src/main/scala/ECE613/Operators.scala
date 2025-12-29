@@ -10,9 +10,10 @@ import org.apache.flink.util.Collector
 import java.util.{ArrayList => JArrayList, List => JList}
 import scala.collection.JavaConverters._
 
+
 object Operators {
 
-  class Operator1 extends KeyedProcessFunction[Int, Point, Point] {
+  class Operator1 extends KeyedProcessFunction[String, Point, Point] {
 
     //STATE
     private var skylineState: ValueState[JList[Point]] = _
@@ -25,7 +26,7 @@ object Operators {
       skylineState = getRuntimeContext.getState(descriptor)
     }
 
-    override def processElement(value: Point, ctx: KeyedProcessFunction[Int, Point, Point]#Context, out: Collector[Point]): Unit = {
+    override def processElement(value: Point, ctx: KeyedProcessFunction[String, Point, Point]#Context, out: Collector[Point]): Unit = {
       var pointlistj = skylineState.value()
       if (pointlistj == null) {
         pointlistj = new JArrayList[Point]()
@@ -114,13 +115,20 @@ object Operators {
 
         }.mkString(" \n")
 
+        val end = System.currentTimeMillis()
+
+
         val result = (
           "="*100 + "\n" +
           "The output of the query is :" + output + "\n"
           +"="*100
+          +"\n"+ end
           )
 
         out.collect(result)
+
+
+
 
       }
     }

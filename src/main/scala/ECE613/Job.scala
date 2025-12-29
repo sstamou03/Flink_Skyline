@@ -17,6 +17,7 @@ object Job {
 
     val param = ParameterTool.fromArgs(args)
     val parallelism = param.getInt("parallelism", 4)
+    val partionNum = param.getInt("partitions", 4)
     val inputTopic = param.get("topic", "Input")
     val brokers = param.get("bootstrap.servers", "localhost:9092")
     val Vmax = param.getDouble("vmax", 1000.0) //Vmax MRDim
@@ -80,11 +81,11 @@ object Job {
 
     val partition = algorithm match {
 
-      case "dim" => points.keyBy(point => Algorithms.MRDim(point,parallelism,Vmax))
+      case "dim" => points.keyBy(point => Algorithms.MRDim(point,partionNum,Vmax).toString)
 
-      case "grid" => points.keyBy(point => Algorithms.MRGrid(point, parallelism, Vmax))
+      case "grid" => points.keyBy(point => Algorithms.MRGrid(point, partionNum, Vmax).toString)
 
-      case "angle" => points.keyBy(p => Algorithms.MRAngle(p, parallelism))
+      case "angle" => points.keyBy(p => Algorithms.MRAngle(p, partionNum).toString)
     }
 
     val local = partition.process(new Operators.Operator1).name("local")

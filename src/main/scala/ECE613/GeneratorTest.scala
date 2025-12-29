@@ -12,6 +12,7 @@ object GeneratorTest {
 
     val broker = "localhost:9092"
     val topic = "Input"
+    val topic2 = "Input2"
 
     val prop = new Properties()
     prop.put("bootstrap.servers", broker)
@@ -21,11 +22,15 @@ object GeneratorTest {
     val producer = new KafkaProducer[String, String](prop)
     val random = new Random()
 
-   // val distro = "uniform"
-   // val distro = "anticorrelated"
-    val distro = "correlated"
+    val distro = "uniform"
+  //  val distro = "anticorrelated"
+  //  val distro = "correlated"
 
-    println(distro)
+    val start = System.currentTimeMillis()
+    println(start)
+
+  //  println(distro)
+
 
     (1 to 15000000).view.map{ _ => //view -> lazy, we avoid memory errors
 
@@ -48,9 +53,12 @@ object GeneratorTest {
       val msg = x+","+y
       val record = new ProducerRecord[String, String](topic, msg)
       producer.send(record)
-      println(msg)
+      //println(msg)
 
     }
+
+    //val endmsg = "ok"
+    //producer.send(new ProducerRecord[String,String](topic2, endmsg))
 
     producer.close()
   }

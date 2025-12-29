@@ -98,13 +98,12 @@ object Algorithms {
       // angle in (-π, π]
       val theta = math.atan2(y, x)
 
-      // normalize to [0, 2π)
-      val twoPi = 2.0 * math.Pi
-      val thetaNorm = if (theta < 0) theta + twoPi else theta
+      val thetaPos = if (theta < 0) 0.0 else theta
 
-      // map angle to sector id
-      val sectorWidth = twoPi / partitionNum.toDouble
-      val id = (thetaNorm / sectorWidth).toInt
+      val maxAngle = math.Pi / 2.0
+
+      val sectorWidth = maxAngle / partitionNum.toDouble
+      val id = (thetaPos / sectorWidth).toInt
 
       // clamp (safety for theta == 2π due to floating point)
       if (id >= partitionNum) partitionNum - 1 else id
