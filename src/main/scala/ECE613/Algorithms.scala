@@ -105,7 +105,7 @@ object Algorithms {
       val sectorWidth = maxAngle / partitionNum.toDouble
       val id = (thetaPos / sectorWidth).toInt
 
-      // clamp (safety for theta == 2π due to floating point)
+      // clamp
       if (id >= partitionNum) partitionNum - 1 else id
     }
   }

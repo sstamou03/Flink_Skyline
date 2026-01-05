@@ -96,6 +96,7 @@ object Operators {
       }
        */
     }
+
     override def processElement2(value: String, ctx: KeyedCoProcessFunction[Int, Point, String, String]#Context, out: Collector[String]): Unit ={
 
       val pointlistj = skylineState.value()

@@ -1,6 +1,6 @@
 @echo off
 docker-compose down -v
-docker-compose up -d --scale taskmanager=4
+docker-compose up -d --scale taskmanager=12
 
 
 docker exec kafka kafka-topics --create --topic Input --bootstrap-server kafka:29092 --partitions 4 --replication-factor 1
