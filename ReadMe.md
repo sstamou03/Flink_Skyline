@@ -1,8 +1,8 @@
 # Distributed Skyline Query Processing with Apache Flink
 
 ## Team Members
-* **Spyridon Stamou** (AM: 2021030090) 
-* **Georgios Angelos Gravalos** (AM: 2021030001) 
+* **Spyridon Stamou** 
+* **Georgios Angelos Gravalos** 
 
 ## Project Description
 This project implements and evaluates distributed Skyline (Dominating) query algorithms using **Apache Flink** and **Apache Kafka**. Specifically, we implemented and compared three MapReduce-based partitioning strategies: **MR-Dim**, **MR-Grid**, and **MR-Angle**. The system is designed to process large-scale data streams ,up to 15 million tuples, and assesses the performance and scalability of the algorithms across different data distributions (Uniform, Correlated, Anti-correlated).
